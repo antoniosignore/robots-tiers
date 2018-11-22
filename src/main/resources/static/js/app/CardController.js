@@ -1,40 +1,115 @@
-'use strict'
+'use strict';
 
-var module = angular.module('demo.controllers', []);
-module.controller("CardController", [ "$scope", "CardService",
-		function($scope, CardService) {
+angular.module('crudApp').controller('CardController',
+    ['CardService', '$scope',  function( CardService, $scope) {
 
-			$scope.cardDto = {
-				name : null,
-                creditCardNumber : null,
-                creditLimit : null,
-                remainingCredit: null
-			};
+        var self = this;
+        self.user = {};
+        self.users=[];
 
-			$scope.saveCard = function() {
-                CardService.saveCard($scope.cardDto).then(function() {
-					CardService.getAllCards().then(function(value) {
-						$scope.allCards= value.data;
-					}, function(reason) {
-						console.log("error occured");
-					}, function(value) {
-						console.log("no callback");
-					});
+        self.submit = submit;
+        self.getAllCards = getAllCards;
+        self.createUser = createUser;
+        self.updateUser = updateUser;
+        self.removeUser = removeUser;
+        self.editUser = editUser;
+        self.reset = reset;
 
-                    function cleanForm() {
-                        $scope.cardDto = {
-                            name: null,
-                            creditCardNumber: null,
-                            creditLimit: null,
-                            remainingCredit: null
-                        };
+        self.successMessage = '';
+        self.errorMessage = '';
+        self.done = false;
+
+        self.onlyIntegers = /^\d+$/;
+        self.onlyNumbers = /^\d+([,.]\d+)?$/;
+
+        function submit() {
+            console.log('Submitting');
+            if (self.user.id === undefined || self.user.id === null) {
+                console.log('Saving New Card', self.user);
+                createUser(self.user);
+            } else {
+                updateUser(self.user, self.user.id);
+                console.log('Card updated with id ', self.user.id);
+            }
+        }
+
+        function createUser(user) {
+            console.log('About to create user');
+            CardService.createUser(user)
+                .then(
+                    function (response) {
+                        console.log('Card created successfully');
+                        self.successMessage = 'Card created successfully';
+                        self.errorMessage='';
+                        self.done = true;
+                        self.user={};
+                        $scope.myForm.$setPristine();
+                    },
+                    function (errResponse) {
+                        console.error('Error while creating Credit Card');
+                        self.errorMessage = 'Error while creating Credit Card: ' + errResponse.data.errorMessage;
+                        self.successMessage='';
                     }
+                );
+        }
 
-                    cleanForm();
-                }, function(reason) {
-					console.log("error occured");
-				}, function(value) {
-					console.log("no callback");
-				});
-			}
-		} ]);
+
+        function updateUser(user, id){
+            console.log('About to update Credit Card');
+            CardService.updateUser(user, id)
+                .then(
+                    function (response){
+                        console.log('Credit Card updated successfully');
+                        self.successMessage='Credit Card updated successfully';
+                        self.errorMessage='';
+                        self.done = true;
+                        $scope.myForm.$setPristine();
+                    },
+                    function(errResponse){
+                        console.error('Error while updating Credit Card');
+                        self.errorMessage='Error while updating Credit Card '+errResponse.data;
+                        self.successMessage='';
+                    }
+                );
+        }
+
+
+        function removeUser(id){
+            console.log('About to remove Credit Card with id '+id);
+            CardService.removeUser(id)
+                .then(
+                    function(){
+                        console.log('Card '+id + ' removed successfully');
+                    },
+                    function(errResponse){
+                        console.error('Error while removing user '+id +', Error :'+errResponse.data);
+                    }
+                );
+        }
+
+
+        function getAllCards(){
+            return CardService.getAllCards();
+        }
+
+        function editUser(id) {
+            self.successMessage='';
+            self.errorMessage='';
+            CardService.getUser(id).then(
+                function (user) {
+                    self.user = user;
+                },
+                function (errResponse) {
+                    console.error('Error while removing Credit Card ' + id + ', Error :' + errResponse.data);
+                }
+            );
+        }
+        function reset(){
+            self.successMessage='';
+            self.errorMessage='';
+            self.user={};
+            $scope.myForm.$setPristine(); //reset Form
+        }
+    }
+
+    ]);

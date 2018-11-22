@@ -80,7 +80,7 @@ public class RestControllerTest {
 
         // Given
         CreditCardValueBean creditCardValueBean =
-                new CreditCardValueBean(
+                new CreditCardValueBean(null,
                         "5497083002781388334", "antonio", 100D, null);
 
         // When
@@ -109,7 +109,7 @@ public class RestControllerTest {
 
         // Given
         CreditCardValueBean creditCardValueBean =
-                new CreditCardValueBean(
+                new CreditCardValueBean(null,
                         "5497083002781388330", "antonio", 100D, null);
 
         // When
@@ -133,7 +133,7 @@ public class RestControllerTest {
 
         // Given
         CreditCardValueBean creditCardValueBean =
-                new CreditCardValueBean("5497083002781388334", "antonio", 100D, null);
+                new CreditCardValueBean(null,"5497083002781388334", "antonio", 100D, null);
 
         // Then
         {

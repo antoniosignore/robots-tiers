@@ -9,6 +9,7 @@ public class MapperUtils {
     public static CreditCardValueBean toValueBean(CreditCardEntity creditCardEntity) {
 
         return new CreditCardValueBean(
+                creditCardEntity.getId(),
                 creditCardEntity.getNumber(),
                 creditCardEntity.getName(),
                 creditCardEntity.getCreditLimit(),
@@ -17,6 +18,7 @@ public class MapperUtils {
 
     public static CreditCardEntity toEntityBean(CreditCardValueBean creditCardValueBean) {
         final CreditCardEntity creditCardEntity = new CreditCardEntity();
+        creditCardEntity.setId(creditCardValueBean.getId());
         creditCardEntity.setNumber(creditCardValueBean.getCreditCardNumber());
         creditCardEntity.setName(creditCardValueBean.getName());
         creditCardEntity.setCreditLimit(creditCardValueBean.getCreditLimit());

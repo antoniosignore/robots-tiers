@@ -2,12 +2,19 @@ package com.asignore.creditcard.controller;
 
 import com.asignore.creditcard.client.CreditCardValueBean;
 import com.asignore.creditcard.service.CreditCardService;
+import com.asignore.creditcard.utils.CustomErrorType;
+import com.asignore.creditcard.utils.JavaLuhnAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -32,23 +39,32 @@ public class CreditCardController implements CreditCardApi {
 
     @Override
     public ResponseEntity<CreditCardValueBean> save(@Valid @RequestBody CreditCardValueBean creditCardValueBean) {
+
         if (creditCardValueBean.getRemainingCredit() == null)
             creditCardValueBean.setRemainingCredit(creditCardValueBean.getCreditLimit());
-        final CreditCardValueBean creditCard = creditCardService.create(creditCardValueBean);
+        CreditCardValueBean creditCard;
+            creditCard = creditCardService.create(creditCardValueBean);
         return new ResponseEntity<>(creditCard, HttpStatus.CREATED);
     }
 
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleException(MethodArgumentNotValidException exception) {
-
-        String errorMsg = exception.getBindingResult().getFieldErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .findFirst()
-                .orElse(exception.getMessage());
-
-        return ErrorResponse.builder().message(errorMsg).build();
+    @ExceptionHandler({ Exception.class })
+    public ResponseEntity<CustomErrorType> handleAll(Exception ex, WebRequest request) {
+        return new ResponseEntity(new CustomErrorType(ex.getLocalizedMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
+//    @ExceptionHandler
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ErrorResponse handleException(MethodArgumentNotValidException exception) {
+//
+//        String errorMsg = exception.getBindingResult().getFieldErrors().stream()
+//                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                .findFirst()
+//                .orElse(exception.getMessage());
+//
+//        return ErrorResponse.builder().message(errorMsg).build();
+//    }
+
+
 }
 

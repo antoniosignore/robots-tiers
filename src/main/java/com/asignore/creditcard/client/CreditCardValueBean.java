@@ -15,6 +15,8 @@ import javax.validation.constraints.NotNull;
 @IsCorrectCreditCard
 public class CreditCardValueBean {
 
+    Long id;
+
     @NotNull
     String creditCardNumber;
 
