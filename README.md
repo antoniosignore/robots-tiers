@@ -81,12 +81,13 @@ Test results are located at:
 
     http://localhost:8080/home  
   
-## Assumptions
-
-The test makes some assumptions and has limitations:
-
      
 # REST CURL
+
+## Valid card numbers
+    12345678903555
+    012850003580200
+    5497083002781388334
 
 ## Create a valid credit card
 
