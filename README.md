@@ -79,7 +79,7 @@ Test results are located at:
   
 ## Angular simple client:
 
-    http://localhost:8080/home  
+    http://localhost:8080 
   
      
 # REST CURL
