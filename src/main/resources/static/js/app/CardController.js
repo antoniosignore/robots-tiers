@@ -53,7 +53,6 @@ angular.module('crudApp').controller('CardController',
                 );
         }
 
-
         function updateUser(user, id){
             console.log('About to update Credit Card');
             CardService.updateUser(user, id)
@@ -73,7 +72,6 @@ angular.module('crudApp').controller('CardController',
                 );
         }
 
-
         function removeUser(id){
             console.log('About to remove Credit Card with id '+id);
             CardService.removeUser(id)
@@ -86,7 +84,6 @@ angular.module('crudApp').controller('CardController',
                     }
                 );
         }
-
 
         function getAllCards(){
             return CardService.getAllCards();
