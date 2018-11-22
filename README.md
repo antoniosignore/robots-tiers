@@ -76,6 +76,11 @@ Test results are located at:
     
 (If I had time I would have preferred packing in a docker image)
   
+  
+## Angular simple client:
+
+    http://localhost:8080/home  
+  
 ## Assumptions
 
 The test makes some assumptions and has limitations:
