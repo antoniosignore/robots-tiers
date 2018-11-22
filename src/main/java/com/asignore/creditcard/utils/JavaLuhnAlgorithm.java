@@ -3,6 +3,7 @@ package com.asignore.creditcard.utils;
 
 public class JavaLuhnAlgorithm {
 
+    // https://en.wikipedia.org/wiki/Luhn_algorithm
     public static boolean isValidCreditCardNumber(String str) {
         int[] a = {str.length() % 2 == 0 ? 1 : 2};        // 1 if length even, 2 otherwise
         return str.chars()
