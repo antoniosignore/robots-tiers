@@ -69,8 +69,6 @@
                         <td>{{u.creditCardNumber}}</td>
                         <td>{{u.remainingCredit}}</td>
                         <td>{{u.creditLimit}}</td>
-						<td><button type="button" ng-click="ctrl.editUser(u.id)" class="btn btn-success custom-width" disabled>Edit</button></td>
-		                <td><button type="button" ng-click="ctrl.removeUser(u.id)" class="btn btn-danger custom-width" disabled>Remove</button></td>
 		            </tr>
 		            </tbody>
 		        </table>		
