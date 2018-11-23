@@ -74,6 +74,12 @@ Test results are located at:
     
     (make sure port 8080 is available)
     
+or
+    
+    The simplest way to run the app is by using the Spring-boot maven plugin:
+    
+    ./mvnw spring-boot:run
+    
 (If I had time I would have preferred packing in a docker image)
   
   
