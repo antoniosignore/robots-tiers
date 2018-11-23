@@ -48,7 +48,7 @@
     </div>
 
     <div class="panel panel-default">
-        <!-- Default panel contents -->
+
         <div class="panel-heading"><span class="lead">List of Users </span></div>
 		<div class="panel-body">
 			<div class="table-responsive">

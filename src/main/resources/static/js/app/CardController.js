@@ -8,7 +8,7 @@ angular.module('crudApp').controller('CardController',
         self.users=[];
 
         self.submit = submit;
-        self.getAllCards = getAllCards;
+        self.getAllUsers = getAllUsers;
         self.createUser = createUser;
         self.updateUser = updateUser;
         self.removeUser = removeUser;
@@ -85,8 +85,9 @@ angular.module('crudApp').controller('CardController',
                 );
         }
 
-        function getAllCards(){
-            return CardService.getAllCards();
+
+        function getAllUsers(){
+            return CardService.getAllUsers();
         }
 
         function editUser(id) {
