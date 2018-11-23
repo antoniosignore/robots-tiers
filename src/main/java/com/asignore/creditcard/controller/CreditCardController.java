@@ -3,17 +3,13 @@ package com.asignore.creditcard.controller;
 import com.asignore.creditcard.client.CreditCardValueBean;
 import com.asignore.creditcard.service.CreditCardService;
 import com.asignore.creditcard.utils.CustomErrorType;
-import com.asignore.creditcard.utils.JavaLuhnAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
@@ -43,13 +39,13 @@ public class CreditCardController implements CreditCardApi {
         if (creditCardValueBean.getRemainingCredit() == null)
             creditCardValueBean.setRemainingCredit(creditCardValueBean.getCreditLimit());
         CreditCardValueBean creditCard;
-            creditCard = creditCardService.create(creditCardValueBean);
+        creditCard = creditCardService.create(creditCardValueBean);
         return new ResponseEntity<>(creditCard, HttpStatus.CREATED);
     }
 
-    @ExceptionHandler({ Exception.class })
+    @ExceptionHandler({Exception.class})
     public ResponseEntity<CustomErrorType> handleAll(Exception ex, WebRequest request) {
-        return new ResponseEntity(new CustomErrorType(ex.getLocalizedMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(new CustomErrorType(ex.getLocalizedMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

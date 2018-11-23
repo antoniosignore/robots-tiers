@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Data
 @EqualsAndHashCode
 @ToString()
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"number"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"number"})})
 public class CreditCardEntity {
 
     @Id
@@ -20,11 +20,11 @@ public class CreditCardEntity {
     private Long id;
 
     @NotNull
-    @Size(max=19, message="Credic card number cannot have more then 19 characters")
+    @Size(max = 19, message = "Credic card number cannot have more then 19 characters")
     private String number;
 
     @NotNull
-    @Size(min=2, message="Name should have atleast 2 characters")
+    @Size(min = 2, message = "Name should have atleast 2 characters")
     private String name;
 
     @NotNull
