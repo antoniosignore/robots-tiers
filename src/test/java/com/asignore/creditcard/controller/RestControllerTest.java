@@ -124,7 +124,7 @@ public class RestControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(content))
                 .andDo(print())
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isInternalServerError())
                 .andReturn();
     }
 
